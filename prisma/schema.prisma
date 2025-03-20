@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+  email String @unique @db.VarChar(255)
+  password String @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Session Session[]
+  List List[]
+}
+
+model Session{
+  id Int @id @default(autoincrement())
+  userId Int 
+  token String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum ListType {
+  TASKS
+  NOTES
+}
+
+model List {
+  id Int @id @default(autoincrement())
+  userId Int
+  name String @db.VarChar(255)
+  sharedWith Int
+  listType ListType
+  bookmark Boolean @default(false)
+  Task Task[]
+  Note Note[]
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Task {
+  id Int @id @default(autoincrement())
+  listId Int
+  content String @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bookmark Boolean @default(false)
+  List List @relation(fields: [listId], references: [id], onDelete: Cascade)
+}
+
+model Note {
+  id Int @id @default(autoincrement())
+  name String
+  listId Int
+  content String @db.VarChar(500)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bookmark Boolean @default(false)
+  isShared Boolean @default(false)
+  List List @relation(fields: [listId], references: [id], onDelete: Cascade)
+  ShareUrl ShareUrl[]
+}
+
+model ShareUrl {
+  id Int @id @default(autoincrement())
+  noteId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  link String @db.VarChar(255)
+  Note Note @relation(fields: [noteId], references: [id], onDelete: Cascade)
+}
