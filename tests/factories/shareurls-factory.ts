@@ -1,4 +1,3 @@
-import {faker} from "@faker-js/faker";
 import { prisma } from "@/config";
 import { ShareUrl } from "@prisma/client";
 import { createNote } from "./notes-factory";
