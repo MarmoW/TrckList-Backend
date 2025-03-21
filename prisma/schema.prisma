@@ -42,7 +42,7 @@ model List {
   id Int @id @default(autoincrement())
   userId Int
   name String @db.VarChar(255)
-  sharedWith Int
+  sharedWith Int? 
   listType ListType
   bookmark Boolean @default(false)
   Task Task[]
