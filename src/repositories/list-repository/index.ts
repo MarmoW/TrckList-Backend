@@ -8,6 +8,15 @@ async function create(data: Prisma.ListUncheckedCreateInput) {
     });
   };
   
-const listRepository = {create};
+
+type UpdateListType = {
+    name: string;
+    ownerId: number;
+    sharedId: number;
+}
+async function update(data: UpdateListType){};
+
+ 
+const listRepository = {create, update};
 
 export default listRepository;

@@ -8,7 +8,6 @@ type CreateListResponse = {
     listType: ListType
 };
 
-
 export async function createList(userId: number, listType: ListType, name: string): Promise<CreateListResponse>{
 
     return listRepository.create({
@@ -17,3 +16,12 @@ export async function createList(userId: number, listType: ListType, name: strin
         listType
     });
 };
+
+export async function updateList(ownerId: number, sharedId: number, name: string){
+
+    return listRepository.update({
+        name,
+        ownerId,
+        sharedId
+    })
+}
