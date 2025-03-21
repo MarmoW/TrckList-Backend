@@ -7,11 +7,14 @@ export type ApplicationError = {
   
  export type SignInParams = Pick<User, 'email' | 'password'>;
 
-export type SignInResult = {};
+export type SignInResult = {
+  user: Pick<User, 'id' | 'email'>;
+  token: String;
+};
 
 export type CreateUserParams = {
-  name: string,
-  email: string,
-  password: string
+  name: string;
+  email: string;
+  password: string;
 }
 

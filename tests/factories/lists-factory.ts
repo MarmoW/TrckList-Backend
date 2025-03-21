@@ -10,8 +10,7 @@ export async function createListTasks(): Promise<List>{
         data: {
             name: faker.word.noun(),
             userId: user.id,
-            listType: ListType.TASKS,
-            sharedWith: null
+            listType: ListType.TASKS
         }
     });
 }
@@ -24,8 +23,7 @@ export async function createListNotes(): Promise<List>{
         data: {
             name: faker.word.noun(),
             userId: user.id,
-            listType: ListType.NOTES,
-            sharedWith: null
+            listType: ListType.NOTES
         }
     });
 }

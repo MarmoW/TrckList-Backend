@@ -22,6 +22,7 @@ model User {
   updatedAt DateTime @updatedAt
   Session Session[]
   List List[]
+  SharedList SharedList[]
 }
 
 model Session{
@@ -42,12 +43,12 @@ model List {
   id Int @id @default(autoincrement())
   userId Int
   name String @db.VarChar(255)
-  sharedWith Int? 
   listType ListType
   bookmark Boolean @default(false)
   Task Task[]
   Note Note[]
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  SharedList SharedList[]
 }
 
 model Task {
@@ -80,4 +81,13 @@ model ShareUrl {
   updatedAt DateTime @updatedAt
   link String @db.VarChar(255)
   Note Note @relation(fields: [noteId], references: [id], onDelete: Cascade)
+}
+
+model SharedList {
+  id Int @id @default(autoincrement())
+  listId Int
+  userId Int 
+  List List @relation(fields: [listId], references: [id], onDelete: Cascade)
+  User User @relation(fields: [userId], references: [id])
+  
 }

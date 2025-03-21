@@ -2,7 +2,6 @@ import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { invalidCredentialsError } from "./errors";
-import { exclude } from "@/utils/prisma-utils";
 import userRepository from "@/repositories/user-repository";
 import sessionRepository from "@/repositories/session-repository";
 import { SignInParams, SignInResult } from "@/protocols";
@@ -44,3 +43,10 @@ async function createSession(userId: number) {
   
     return token;
 };
+
+const authService = {
+    signIn,
+};
+
+export * from "./errors";
+export default authService;
