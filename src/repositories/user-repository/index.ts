@@ -23,9 +23,21 @@ async function create(data: Prisma.UserUncheckedCreateInput) {
     })
 };
 
+async function editUser(userId: number, data:{name?:string, email?:string, password?:string}){    
+
+    return prisma.user.update({
+        where:{
+            id: userId,
+        },
+        data: {
+            ...data,
+        },
+    });
+}
+
 
 const userRepository = {
-    findByEmail, create
+    findByEmail, create, editUser
 };
 
 export default userRepository;
