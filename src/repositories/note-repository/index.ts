@@ -19,7 +19,6 @@ async function update(noteId: number, content?: string, name?: string, bookmark?
         data:{
             name: name,
             content: content,
-            updatedAt: new Date(),
             bookmark: bookmark,
             isShared: isShared,
         },

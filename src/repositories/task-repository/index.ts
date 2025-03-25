@@ -17,7 +17,6 @@ async function update(taskId: number, content?: string, bookmark?: boolean){
         },
         data:{
             content: content,
-            updatedAt: new Date(),
             bookmark: bookmark,
         },
     })
