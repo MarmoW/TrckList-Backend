@@ -30,8 +30,17 @@ async function deleteTask(taskId: number){
 });
 };
 
-const taskRepository = {
-    create, update, deleteTask
+async function getTaskById(taskId:number){
+    return prisma.task.findUnique({
+        where:{
+            id: taskId,
+    },
+})
 };
+
+const taskRepository = {
+    create, update, deleteTask, getTaskById
+};
+
 
 export default taskRepository;

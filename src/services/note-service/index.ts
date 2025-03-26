@@ -1,5 +1,6 @@
 import { badRequestError } from "@/errors/bad-request-error";
 import { forbiddenError } from "@/errors/forbidden-error";
+import { noContentError } from "@/errors/no-content-error";
 import { notFoundError } from "@/errors/not-found-error";
 import listRepository from "@/repositories/list-repository";
 import noteRepository from "@/repositories/note-repository";
@@ -10,7 +11,8 @@ import { nanoid } from 'nanoid';
 export async function createNote(userId: number, listId: number, name: string, content:string): Promise<Note>{
 
     const list = await listRepository.getListById(listId);
-
+    
+    if(list.listType !== "NOTES") throw forbiddenError;
     if(list.userId !== userId) throw forbiddenError;
 
     return noteRepository.create({
@@ -32,6 +34,18 @@ export async function deleteNote(userId: number, noteId: number, listId:number){
 
 };
 
+export async function updateNote(userId: number, noteId: number, data:{name?: string, content?: string, bookmark?: boolean}){
+
+    if(!data.name && !data.bookmark) throw noContentError;
+
+    const note = await noteRepository.getNoteById(noteId);
+    const list = await listRepository.getListById(note.listId)
+    if(!note) throw notFoundError;
+    if(list.userId !== userId) throw forbiddenError;
+
+    return noteRepository.update(noteId, data.content, data.name, data.bookmark, undefined );
+
+};
 
 export async function shareNote(userId: number, noteId:number, listId:number){
 

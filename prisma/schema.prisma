@@ -23,6 +23,7 @@ model User {
   Session Session[]
   List List[]
   SharedList SharedList[]
+  PasswordResetToken PasswordResetToken[]
 }
 
 model Session{
@@ -90,4 +91,12 @@ model SharedList {
   List List @relation(fields: [listId], references: [id], onDelete: Cascade)
   User User @relation(fields: [userId], references: [id])
   
+}
+
+model PasswordResetToken{
+  id Int @id @default(autoincrement())
+  userId Int
+  createdAt DateTime @default(now())
+  expiresAt DateTime @default(dbgenerated("(NOW() + INTERVAL '24 hours')"))
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
