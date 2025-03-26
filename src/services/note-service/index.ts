@@ -8,7 +8,7 @@ import shareUrlRepository from "@/repositories/shareurl-repository";
 import { Note } from "@prisma/client";
 import { nanoid } from 'nanoid';
 
-export async function createNote(userId: number, listId: number, name: string, content:string): Promise<Note>{
+async function createNote(userId: number, listId: number, name: string, content:string): Promise<Note>{
 
     const list = await listRepository.getListById(listId);
     
@@ -22,7 +22,7 @@ export async function createNote(userId: number, listId: number, name: string, c
     });
 };
 
-export async function deleteNote(userId: number, noteId: number, listId:number){
+async function deleteNote(userId: number, noteId: number, listId:number){
     
     const list = await listRepository.getListById(listId);
     if(list.userId !== userId) throw forbiddenError;
@@ -34,7 +34,7 @@ export async function deleteNote(userId: number, noteId: number, listId:number){
 
 };
 
-export async function updateNote(userId: number, noteId: number, data:{name?: string, content?: string, bookmark?: boolean}){
+async function updateNote(userId: number, noteId: number, data:{name?: string, content?: string, bookmark?: boolean}){
 
     if(!data.name && !data.bookmark) throw noContentError;
 
@@ -47,7 +47,7 @@ export async function updateNote(userId: number, noteId: number, data:{name?: st
 
 };
 
-export async function shareNote(userId: number, noteId:number, listId:number){
+async function shareNote(userId: number, noteId:number, listId:number){
 
     const list = await listRepository.getListById(listId);
     if(list.userId !== userId) throw forbiddenError;
@@ -71,7 +71,7 @@ export async function shareNote(userId: number, noteId:number, listId:number){
 
 };
 
-export async function unshareNote(userId: number, noteId: number, listId: number){
+async function unshareNote(userId: number, noteId: number, listId: number){
     
     const list = await listRepository.getListById(listId);
     if(list.userId !== userId) throw forbiddenError;
@@ -88,3 +88,13 @@ export async function unshareNote(userId: number, noteId: number, listId: number
 
 
 };
+
+async function getAllNotes(listId:number){
+    return noteRepository.getNotesByListId(listId);
+}
+
+const noteService = {
+    createNote, deleteNote, updateNote, shareNote, unshareNote, getAllNotes
+};
+
+export default noteService;

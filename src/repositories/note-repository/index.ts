@@ -41,8 +41,16 @@ async function getNoteById(noteId:number){
 });
 };
 
+async function getNotesByListId(listId: number){
+    return prisma.note.findMany({
+        where:{
+            listId: listId,
+        },
+    })
+};
+
 const noteRepository = {
-    create, update, deleteNote,getNoteById
+    create, update, deleteNote,getNoteById,getNotesByListId
 };
 
 export default noteRepository;

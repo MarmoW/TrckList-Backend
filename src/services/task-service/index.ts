@@ -8,7 +8,7 @@ import taskRepository from "@/repositories/task-repository";
 
 
 
-export async function createTask(userId: number, listId:number, content: string){
+async function createTask(userId: number, listId:number, content: string){
 
     const list = await listRepository.getListById(listId);
 
@@ -23,7 +23,7 @@ export async function createTask(userId: number, listId:number, content: string)
 
 }; 
 
-export async function updateTask(userId:number, listId: number,taskId:number, data:{content?: string, bookmark?: boolean}){
+async function updateTask(userId:number, listId: number,taskId:number, data:{content?: string, bookmark?: boolean}){
     
     if(!data.content && !data.bookmark) throw noContentError;
     
@@ -40,7 +40,7 @@ export async function updateTask(userId:number, listId: number,taskId:number, da
 
 };
 
-export async function deleteTask(userId:number, listId: number, taskId: number){
+async function deleteTask(userId:number, listId: number, taskId: number){
 
     const list = await listRepository.getListById(listId);
     const task = await taskRepository.getTaskById(taskId);
@@ -50,3 +50,13 @@ export async function deleteTask(userId:number, listId: number, taskId: number){
 
     return taskRepository.deleteTask(taskId);
 };
+
+async function getAllTaks(listId:number){
+    return taskRepository.getTasksByListId(listId);
+};
+
+const taskService = {
+    createTask, updateTask, deleteTask, getAllTaks
+};
+
+export default taskService;

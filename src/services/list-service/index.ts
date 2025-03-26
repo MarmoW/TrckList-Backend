@@ -12,7 +12,7 @@ type CreateListResponse = {
     listType: ListType
 };
 
-export async function createList(userId: number, listType: ListType, name: string): Promise<CreateListResponse>{
+async function createList(userId: number, listType: ListType, name: string): Promise<CreateListResponse>{
 
     return listRepository.create({
         name,
@@ -21,7 +21,7 @@ export async function createList(userId: number, listType: ListType, name: strin
     });
 };
 
-export async function updateList(listId: number, userId:number, data:{name?:string, bookmark?: boolean}){
+async function updateList(listId: number, userId:number, data:{name?:string, bookmark?: boolean}){
     
     if(!data.name && !data.bookmark) throw noContentError;
 
@@ -40,12 +40,22 @@ export async function updateList(listId: number, userId:number, data:{name?:stri
     );
 };
 
-export async function deleteList(listId: number, userId: number) {
+async function deleteList(listId: number, userId: number) {
 
     const list = await listRepository.getListById(listId);
 
     if(userId !== list.userId) throw forbiddenError;
 
     return listRepository.deleteList(listId);
-}
+};
 
+async function getUserLists(userId: number){
+
+    return listRepository.getListsByUser(userId);
+};
+
+const listService = {
+    createList, updateList, deleteList, getUserLists
+};
+
+export default listService;

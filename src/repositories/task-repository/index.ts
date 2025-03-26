@@ -38,8 +38,16 @@ async function getTaskById(taskId:number){
 })
 };
 
+async function getTasksByListId(listId: number){
+    return prisma.task.findMany({
+        where:{
+            listId: listId,
+        },
+    })
+};
+
 const taskRepository = {
-    create, update, deleteTask, getTaskById
+    create, update, deleteTask, getTaskById,getTasksByListId
 };
 
 

@@ -29,6 +29,14 @@ async function getListById(listId: number){
 });
 };
 
+async function getListsByUser(userId: number){
+  return prisma.list.findMany({
+    where:{
+      userId: userId,
+    },
+  })
+};
+
 async function deleteList(listId: number){
 
   return prisma.list.delete({
@@ -45,6 +53,6 @@ type UpdateListType = {
   sharedId: number;
 }
 
-const listRepository = {create, update, getListById, deleteList};
+const listRepository = {create, update, getListById, deleteList, getListsByUser};
 
 export default listRepository;
