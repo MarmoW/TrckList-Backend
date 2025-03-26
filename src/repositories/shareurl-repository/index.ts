@@ -9,11 +9,11 @@ async function create(data: Prisma.ShareUrlUncheckedCreateInput) {
     
 };
 
-async function deleteShareurl(shareUrlId: number) {
+async function deleteShareurl(noteId: number) {
 
-    return prisma.shareUrl.delete({
+    return prisma.shareUrl.deleteMany({
         where:{
-            id: shareUrlId,
+            noteId: noteId,
         },
     });
     

@@ -33,8 +33,16 @@ async function deleteNote(noteId: number){
 });
 };
 
+async function getNoteById(noteId:number){
+    return prisma.note.findFirst({
+        where:{
+            id: noteId,
+        },
+});
+};
+
 const noteRepository = {
-    create, update, deleteNote
+    create, update, deleteNote,getNoteById
 };
 
 export default noteRepository;
