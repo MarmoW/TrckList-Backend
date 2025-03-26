@@ -36,6 +36,7 @@ async function passwordValidation(password: string, userPassword: string) {
 
 async function createSession(userId: number) {
     const token = jwt.sign({ userId }, process.env.JWT_SECRET);
+
     await sessionRepository.create({
       token,
       userId,

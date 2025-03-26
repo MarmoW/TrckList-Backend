@@ -25,16 +25,16 @@ async function update(noteId: number, content?: string, name?: string, bookmark?
     })
 }
 
-async function deleteNote(taskId: number){
+async function deleteNote(noteId: number){
     return prisma.note.delete({
         where:{
-            id: taskId,
+            id: noteId,
         },
 });
 };
 
-const taskRepository = {
+const noteRepository = {
     create, update, deleteNote
 };
 
-export default taskRepository;
+export default noteRepository;

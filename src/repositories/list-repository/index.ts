@@ -20,12 +20,31 @@ async function update(listId: number, data:{name?:string, bookmark?: boolean}){
 });
 };
 
+async function getListById(listId: number){
+
+  return prisma.list.findUnique({
+    where: {
+        id: listId,
+    },
+});
+};
+
+async function deleteList(listId: number){
+
+  return prisma.list.delete({
+    where:{
+      id: listId,
+    },
+  }
+  );
+};
+
 type UpdateListType = {
   name: string;
   ownerId: number;
   sharedId: number;
 }
 
-const listRepository = {create, update};
+const listRepository = {create, update, getListById, deleteList};
 
 export default listRepository;
