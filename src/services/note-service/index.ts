@@ -22,13 +22,13 @@ async function createNote(userId: number, listId: number, name: string, content:
     });
 };
 
-async function deleteNote(userId: number, noteId: number, listId:number){
+async function deleteNote(userId: number, noteId: number){
     
-    const list = await listRepository.getListById(listId);
-    if(list.userId !== userId) throw forbiddenError;
 
     const note = await noteRepository.getNoteById(noteId);
     if(!note) throw notFoundError;
+    const list = await listRepository.getListById(note.listId);
+    if(list.userId !== userId) throw forbiddenError;
 
     return noteRepository.deleteNote(noteId);
 
@@ -47,14 +47,13 @@ async function updateNote(userId: number, noteId: number, data:{name?: string, c
 
 };
 
-async function shareNote(userId: number, noteId:number, listId:number){
-
-    const list = await listRepository.getListById(listId);
-    if(list.userId !== userId) throw forbiddenError;
+async function shareNote(userId: number, noteId:number){
 
     const note = await noteRepository.getNoteById(noteId);
     if(!note) throw notFoundError;
     if(note.isShared === true) throw badRequestError; 
+    const list = await listRepository.getListById(note.listId);
+    if(list.userId !== userId) throw forbiddenError;
 
     const isShared = true;
 
@@ -71,14 +70,13 @@ async function shareNote(userId: number, noteId:number, listId:number){
 
 };
 
-async function unshareNote(userId: number, noteId: number, listId: number){
+async function unshareNote(userId: number, noteId: number){
     
-    const list = await listRepository.getListById(listId);
-    if(list.userId !== userId) throw forbiddenError;
-
     const note = await noteRepository.getNoteById(noteId);
     if(!note) throw notFoundError;
     if(note.isShared === false) throw badRequestError; 
+    const list = await listRepository.getListById(note.listId);
+    if(list.userId !== userId) throw forbiddenError;
 
     shareUrlRepository.deleteShareurl(noteId);
 
@@ -91,10 +89,14 @@ async function unshareNote(userId: number, noteId: number, listId: number){
 
 async function getAllNotes(listId:number){
     return noteRepository.getNotesByListId(listId);
+};
+
+async function getNoteById(noteId: number){
+    return noteRepository.getNoteById(noteId);
 }
 
 const noteService = {
-    createNote, deleteNote, updateNote, shareNote, unshareNote, getAllNotes
+    createNote, deleteNote, updateNote, shareNote, unshareNote, getAllNotes, getNoteById
 };
 
 export default noteService;

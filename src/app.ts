@@ -7,6 +7,7 @@ import { loadEnv, connectDb, disconnectDB } from "./config";
 import { authRouter } from "./routers/auth-router";
 import { usersRouter } from "./routers/user-router";
 import { handleApplicationError } from "./middlewares";
+import { listsRouter } from "./routers/list-router";
 
 loadEnv();
 
@@ -19,7 +20,7 @@ app
  .use(express.json())
  .use("/auth", authRouter)
  .use("/users", usersRouter)
-
+ .use("/lists", listsRouter)
 
 export function init(): Promise<Express>{
     connectDb();
