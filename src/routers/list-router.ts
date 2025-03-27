@@ -4,12 +4,12 @@ import { getList, updateList, deleteList, createList } from "@/controllers";
 
 const listsRouter = Router();
 
-listsRouter.use("/lists*", authenticateToken);
+listsRouter.use("/*", authenticateToken);
 
 listsRouter
-        .get("/lists", getList)
-        .post("/lists", createList)
-        .put("/lists/:listId", updateList)
-        .delete("/lists/:listId", deleteList);
+        .get("/", getList)
+        .post("/", createList)
+        .put("/:listId", updateList)
+        .delete("/:listId", deleteList);
 
 export { listsRouter };
