@@ -9,15 +9,18 @@ export async function userPost(req: Request, res:Response){
     try{
         const user = await userService.createUser({email, password, name});
         
-        return res.status(httpStatus.CREATED).json({
+        res.status(httpStatus.CREATED).json({
             id: user.id,
             email: user.email,
             name: user.name,
         });
+        return
     }catch(err){
         if(err.name === 'DuplicatedEmailError'){
-            return res.status(httpStatus.CONFLICT).send(err);
+           res.status(httpStatus.CONFLICT).send(err);
+           return
         }
-        return res.status(httpStatus.BAD_REQUEST).send(err);
+       res.status(httpStatus.BAD_REQUEST).send(err);
+       return
     }
 };

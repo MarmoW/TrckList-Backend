@@ -2,7 +2,7 @@ import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
 import userRepository from "@/repositories/user-repository";
 import { CreateUserParams } from "@/protocols";
-import { duplicatedEmailError } from "./errors";
+import { duplicatedEmailError } from "@/errors/duplicated-email-error";
 
  
 export async function createUser({email, password, name}: CreateUserParams) : Promise<User>{
@@ -30,5 +30,4 @@ const userService = {
     createUser
 };
 
-export * from "./errors.js";
 export default userService;

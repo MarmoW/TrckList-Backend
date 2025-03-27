@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import * as jwt from 'jsonwebtoken';
 import { prisma } from '@/config';
-import { unauthorizedError } from '../errors/unauthorized-error';
+import { unauthorizedError } from '@/errors';
 
 export type AuthenticatedRequest = Request & JWTPayload;
 

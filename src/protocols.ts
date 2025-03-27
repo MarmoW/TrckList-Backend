@@ -18,3 +18,6 @@ export type CreateUserParams = {
   password: string;
 }
 
+export type ApplicationInvalidateDataError = ApplicationError & {
+  details: string[];
+};

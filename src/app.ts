@@ -4,6 +4,9 @@ import express, { Express } from "express";
 import cors from "cors";
 
 import { loadEnv, connectDb, disconnectDB } from "./config";
+import { authRouter } from "./routers/auth-router";
+import { usersRouter } from "./routers/user-router";
+import { handleApplicationError } from "./middlewares";
 
 loadEnv();
 
@@ -14,6 +17,9 @@ const app = express();
 app
  .use(cors())
  .use(express.json())
+ .use("/auth", authRouter)
+ .use("/users", usersRouter)
+
 
 export function init(): Promise<Express>{
     connectDb();

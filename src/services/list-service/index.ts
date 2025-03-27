@@ -1,9 +1,9 @@
 import { ListType } from "@prisma/client";
 import listRepository from "@/repositories/list-repository";
 import sharedListRepository from "@/repositories/sharedlist-repository";
-import { forbiddenError } from "@/errors/forbidden-error";
-import { badRequestError } from "@/errors/bad-request-error";
-import { noContentError } from "@/errors/no-content-error";
+import { forbiddenError } from "@/errors";
+import { badRequestError } from "@/errors";
+import { noContentError } from "@/errors";
 
 
 type CreateListResponse = {
