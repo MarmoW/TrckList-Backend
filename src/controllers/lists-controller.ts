@@ -60,3 +60,7 @@ export async function createList(req: AuthenticatedRequest, res: Response, next:
         next(err);
     }
 };
+
+export async function shareList(req: AuthenticatedRequest, res: Response, next: NextFunction){
+     
+}
