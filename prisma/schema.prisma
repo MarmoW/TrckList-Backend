@@ -50,6 +50,8 @@ model List {
   Note Note[]
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
   SharedList SharedList[]
+
+  @@unique([userId, name])
 }
 
 model Task {
@@ -88,7 +90,7 @@ model SharedList {
   id Int @id @default(autoincrement())
   listId Int
   userId Int 
-  List List @relation(fields: [listId], references: [id], onDelete: Cascade)
+  List List @relation(fields: [listId], references: [id])
   User User @relation(fields: [userId], references: [id])
   
 }

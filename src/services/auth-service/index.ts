@@ -16,7 +16,12 @@ async function signIn(params: SignInParams): Promise<SignInResult>{
 
     const token = await createSession(user.id);
 
-    return
+
+    return {
+        user:{id: user.id, 
+            email:user.email},
+        token
+    }
 };
 
 type FetchUsersResult = Pick<User, 'id' | 'email' | 'password'>;

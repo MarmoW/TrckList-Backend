@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import taskService from "@/services/task-service";
-import listRepository from "@/repositories/list-repository";
+
 
 export async function getTasks(req: Request, res: Response, next: NextFunction){
 
-    const {listId} = req.body;
+    const listId = Number(req.params.listId);
 
     try{
         const notes = await taskService.getAllTaks(listId);

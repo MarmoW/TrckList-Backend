@@ -4,12 +4,12 @@ import { getTasks, updateTask, deleteTask, createTask } from "@/controllers";
 
 const tasksRouter = Router();
 
-tasksRouter.use("/lists/:listid/tasks*", authenticateToken);
+tasksRouter.use("/*", authenticateToken);
 
 tasksRouter
-        .get("/lists/:listid/tasks", getTasks)
-        .post("/lists/:listid/tasks", createTask)
-        .put("/lists/:listid/tasks/:taskid", updateTask)
-        .delete("/lists/:listid/tasks/:taskid", deleteTask);
+        .get("/", getTasks)
+        .post("/", createTask)
+        .put("/:taskid", updateTask)
+        .delete("/:taskid", deleteTask);
 
 export default tasksRouter;

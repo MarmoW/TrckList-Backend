@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import noteService from "@/services/note-service";
+import { AuthenticatedRequest } from "@/middlewares";
 
 
-export async function getNotes(req: Request, res: Response, next: NextFunction){
+export async function getNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
     const {listId} = req.body;
 
@@ -17,7 +18,7 @@ export async function getNotes(req: Request, res: Response, next: NextFunction){
     }
 };
 
-export async function updateNotes(req: Request, res: Response, next: NextFunction){
+export async function updateNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
     const {userId, listId, noteId, data} = req.body;
 
     try{
@@ -29,7 +30,7 @@ export async function updateNotes(req: Request, res: Response, next: NextFunctio
     }
 };
 
-export async function deleteNotes(req: Request, res: Response, next: NextFunction){
+export async function deleteNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
     const {userId, noteId} = req.body;
 
     try{
@@ -42,9 +43,14 @@ export async function deleteNotes(req: Request, res: Response, next: NextFunctio
     }
 };
 
-export async function createNotes(req: Request, res: Response, next: NextFunction){
+export async function createNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
-    const {listId, userId, name, content} = req.body;
+    const { userId } = req;
+    const {name, content} = req.body;
+    console.log(req.params.listId)
+    const listId = Number(req.params.listId); 
+    console.log(listId)
+
     try{
         const newNote = await noteService.createNote(listId, userId, name, content);
         res.status(httpStatus.OK).send(newNote);

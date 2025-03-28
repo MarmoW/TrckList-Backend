@@ -11,7 +11,7 @@ import { nanoid } from 'nanoid';
 async function createNote(userId: number, listId: number, name: string, content:string): Promise<Note>{
 
     const list = await listRepository.getListById(listId);
-    
+    console.log(list)
     if(list.listType !== "NOTES") throw forbiddenError;
     if(list.userId !== userId) throw forbiddenError;
 

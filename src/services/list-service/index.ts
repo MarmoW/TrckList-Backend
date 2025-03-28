@@ -4,6 +4,7 @@ import sharedListRepository from "@/repositories/sharedlist-repository";
 import { forbiddenError } from "@/errors";
 import { badRequestError } from "@/errors";
 import { noContentError } from "@/errors";
+import { nanoid } from "nanoid";
 
 
 type CreateListResponse = {
@@ -13,6 +14,7 @@ type CreateListResponse = {
 };
 
 async function createList(userId: number, listType: ListType, name: string): Promise<CreateListResponse>{
+
 
     return listRepository.create({
         name,
@@ -26,11 +28,13 @@ async function updateList(listId: number, userId:number, data:{name?:string, boo
     if(!data.name && !data.bookmark) throw noContentError;
 
     //2 Simple queries pro: simple code, more reusability cons: slower than single joint query
-    const [isOwner, isGuest] = await Promise.all([
-        listRepository.getListById(listId), 
-        sharedListRepository.isThisUserAllowed(listId, userId)
+    const [isOwner] = await Promise.all([
+        listRepository.getListById(listId)
       ]);
-    if(userId !== isOwner.userId || !isGuest) throw forbiddenError;
+    
+      console.log(userId, isOwner.userId)
+    if(userId !== isOwner.userId) throw forbiddenError;
+    
     if(isOwner.name === data.name && isOwner.bookmark === data.bookmark) throw badRequestError;   
     
 

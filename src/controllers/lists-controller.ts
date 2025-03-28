@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import listService from "@/services/list-service";
+import { AuthenticatedRequest } from "@/middlewares";
 
-export async function getList(req: Request, res: Response, next: NextFunction){
+export async function getList(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
-    const {userId} = req.body;
+    const { userId } = req;
 
     try{
         const lists = await listService.getUserLists(userId);
@@ -16,9 +17,10 @@ export async function getList(req: Request, res: Response, next: NextFunction){
     }
 };
 
-export async function updateList(req: Request, res: Response, next: NextFunction){
-
-    const { listId, userId, data} = req.body;
+export async function updateList(req: AuthenticatedRequest, res: Response, next: NextFunction){
+    const { userId } = req;
+    const listId = Number(req.params.listId); 
+    const { data} = req.body;
 
     try{
         await listService.updateList(listId, userId, data);
@@ -29,11 +31,10 @@ export async function updateList(req: Request, res: Response, next: NextFunction
     }
 };
 
-export async function deleteList(req: Request, res: Response, next: NextFunction){
+export async function deleteList(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
-    const {userId} = req.body;
-    const {listId} = req.body;
-
+    const {userId} = req;
+    const listId = Number(req.params.listId); 
 
     try{
         await listService.deleteList(listId, userId);
@@ -45,11 +46,15 @@ export async function deleteList(req: Request, res: Response, next: NextFunction
     }
 };
 
-export async function createList(req: Request, res: Response, next: NextFunction){
-    const {userId, listType, name} = req.body;
+export async function createList(req: AuthenticatedRequest, res: Response, next: NextFunction){
+
+    const { userId } = req;
+    const { listType, name } = req.body;
 
     try{
         await listService.createList(userId, listType, name);
+        
+        res.sendStatus(httpStatus.OK);
         return
     }catch(err){
         next(err);

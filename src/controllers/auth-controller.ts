@@ -11,6 +11,7 @@ export async function signInPost(req: Request, res: Response){
         const result = await authService.signIn({email, password});
         
         res.status(httpStatus.OK).send(result);
+        console.log(result);
         return
     }catch(err){
         res.status(httpStatus.UNAUTHORIZED).send({});

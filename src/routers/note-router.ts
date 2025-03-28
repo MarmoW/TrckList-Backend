@@ -4,15 +4,15 @@ import { getNotes, updateNotes, deleteNotes, createNotes, shareNotes, unshareNot
 
 const notesRouter = Router();
 
-notesRouter.use("/lists/:listid/notes*", authenticateToken);
+notesRouter.use("/*", authenticateToken);
 
 notesRouter
-        .get("/lists/:listid/notes", getNotes)
-        .post("/lists/:listid/notes", createNotes)
-        .get("/lists/:listid/notes/:noteid", getNotesById)
-        .put("/lists/:listid/notes/:noteid", updateNotes)
-        .put("/lists/:listid/notes/:noteid/share", shareNotes)
-        .put("/lists/:listid/notes/:noteid/unshare", unshareNotes)
-        .delete("/lists/:listid/notes/:noteid", deleteNotes);
+        .get("/", getNotes)
+        .post("/", createNotes)
+        .get("/:noteid", getNotesById)
+        .put("/:noteid", updateNotes)
+        .put("/:noteid/share", shareNotes)
+        .put("/:noteid/unshare", unshareNotes)
+        .delete("/:noteid", deleteNotes);
 
 export default notesRouter;
