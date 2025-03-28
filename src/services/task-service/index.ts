@@ -25,19 +25,28 @@ async function createTask(userId: number, listId:number, content: string){
 
 async function updateTask(userId:number, listId: number,taskId:number, data:{content?: string, bookmark?: boolean}){
     
-    if(!data.content && !data.bookmark) throw noContentError;
-    
     const list = await listRepository.getListById(listId);
     const task = await taskRepository.getTaskById(taskId);
-
+    console.log(data.content)
+    
+    if(!data.content) {
+        if(!task) throw badRequestError;
+        if(!list) throw notFoundError;
+        if(list.listType !== "TASKS") throw badRequestError;
+        if(userId !== list.userId) throw forbiddenError;
+        if(data.bookmark !== task.bookmark){        
+            return taskRepository.update(taskId, undefined, data.bookmark);
+        }else{
+            throw badRequestError;
+        }
+    };
+    
     if(!task) throw badRequestError;
     if(!list) throw notFoundError;
     if(list.listType !== "TASKS") throw badRequestError;
     if(userId !== list.userId) throw forbiddenError;
 
-    return taskRepository.update(taskId);
-
-
+    return taskRepository.update(taskId, data.content, data.bookmark);
 };
 
 async function deleteTask(userId:number, listId: number, taskId: number){

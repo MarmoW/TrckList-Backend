@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import noteService from "@/services/note-service";
 import { AuthenticatedRequest } from "@/middlewares";
 
-
+//check list: update, delete, create, getbyid, getnotes,
 export async function getNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
     const {listId} = req.body;
@@ -19,8 +19,18 @@ export async function getNotes(req: AuthenticatedRequest, res: Response, next: N
 };
 
 export async function updateNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
-    const {userId, listId, noteId, data} = req.body;
+    
+    const { userId } = req;
+    const { name, content, bookmark } = req.body;
+    const noteId = Number(req.params.noteId);
+    //const listId = Number(req.params.listId); 
 
+    const data = {
+        name,
+        content,
+        bookmark
+    };
+    
     try{
         const updatedNote = await noteService.updateNote(userId, noteId, data);
         res.status(httpStatus.OK).send(updatedNote);
@@ -31,7 +41,9 @@ export async function updateNotes(req: AuthenticatedRequest, res: Response, next
 };
 
 export async function deleteNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
-    const {userId, noteId} = req.body;
+
+    const { userId } = req;
+    const noteId = Number(req.params.noteId);
 
     try{
         await noteService.deleteNote(userId, noteId);
@@ -47,9 +59,8 @@ export async function createNotes(req: AuthenticatedRequest, res: Response, next
 
     const { userId } = req;
     const {name, content} = req.body;
-    console.log(req.params.listId)
+
     const listId = Number(req.params.listId); 
-    console.log(listId)
 
     try{
         const newNote = await noteService.createNote(listId, userId, name, content);
@@ -60,8 +71,11 @@ export async function createNotes(req: AuthenticatedRequest, res: Response, next
     } 
 }
 
-export async function shareNotes(req: Request, res: Response, next: NextFunction){
-    const {userId, noteId} = req.body;
+export async function shareNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
+
+    const {userId} = req;
+    const noteId = Number(req.params.noteId);
+    
 
     try{
         const sharedLink = await noteService.shareNote(userId, noteId);
@@ -72,10 +86,11 @@ export async function shareNotes(req: Request, res: Response, next: NextFunction
     }
 };
 
-export async function unshareNotes(req: Request, res: Response, next:NextFunction){
+export async function unshareNotes(req: AuthenticatedRequest, res: Response, next:NextFunction){
 
-    const {userId, noteId} = req.body
-
+    const {userId} = req;
+    const noteId = Number(req.params.noteId);
+    
     try{
         await noteService.unshareNote(userId, noteId);
         res.sendStatus(httpStatus.OK);
@@ -85,14 +100,14 @@ export async function unshareNotes(req: Request, res: Response, next:NextFunctio
     }
 };
 
-export async function getNotesById(req: Request, res: Response, next: NextFunction){
+export async function getNotesById(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
-    const {noteId} = req.body;
+    const noteId = Number(req.params.noteId);
 
     try{
         const note = await noteService.getNoteById(noteId);
 
-        res.send(httpStatus.OK).send(note);
+        res.status(httpStatus.OK).send(note);
         return
 
     }catch(err){

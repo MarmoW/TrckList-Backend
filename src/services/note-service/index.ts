@@ -8,10 +8,10 @@ import shareUrlRepository from "@/repositories/shareurl-repository";
 import { Note } from "@prisma/client";
 import { nanoid } from 'nanoid';
 
-async function createNote(userId: number, listId: number, name: string, content:string): Promise<Note>{
+async function createNote(listId: number, userId: number,  name: string, content:string): Promise<Note>{
 
     const list = await listRepository.getListById(listId);
-    console.log(list)
+
     if(list.listType !== "NOTES") throw forbiddenError;
     if(list.userId !== userId) throw forbiddenError;
 
@@ -35,8 +35,16 @@ async function deleteNote(userId: number, noteId: number){
 };
 
 async function updateNote(userId: number, noteId: number, data:{name?: string, content?: string, bookmark?: boolean}){
+    if(!data.name && !data.content) {
 
-    if(!data.name && !data.bookmark) throw noContentError;
+        const note = await noteRepository.getNoteById(noteId);
+         const list = await listRepository.getListById(note.listId)
+         if(!note) throw notFoundError;
+         if(list.userId !== userId) throw forbiddenError;
+         if(note.bookmark !== data.bookmark){
+            return noteRepository.update(noteId, undefined, undefined , data.bookmark, undefined );};
+            throw noContentError;
+        };
 
     const note = await noteRepository.getNoteById(noteId);
     const list = await listRepository.getListById(note.listId)

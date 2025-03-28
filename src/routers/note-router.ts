@@ -2,17 +2,17 @@ import { Router } from "express";
 import { authenticateToken } from "@/middlewares";
 import { getNotes, updateNotes, deleteNotes, createNotes, shareNotes, unshareNotes ,getNotesById, } from "@/controllers";
 
-const notesRouter = Router();
+const notesRouter = Router({ mergeParams: true });
 
 notesRouter.use("/*", authenticateToken);
 
 notesRouter
         .get("/", getNotes)
         .post("/", createNotes)
-        .get("/:noteid", getNotesById)
-        .put("/:noteid", updateNotes)
-        .put("/:noteid/share", shareNotes)
-        .put("/:noteid/unshare", unshareNotes)
-        .delete("/:noteid", deleteNotes);
+        .get("/:noteId", getNotesById)
+        .put("/:noteId", updateNotes)
+        .put("/:noteId/share", shareNotes)
+        .put("/:noteId/unshare", unshareNotes)
+        .delete("/:noteId", deleteNotes);
 
 export default notesRouter;

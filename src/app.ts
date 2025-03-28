@@ -23,7 +23,6 @@ app
  .use("/users", usersRouter)
  .use("/lists", listsRouter)
  .use("/lists/:listid/tasks", tasksRouter)
- .use("/lists/:listid/notes", notesRouter)
  //.use(handleApplicationError);
 
 export function init(): Promise<Express>{
