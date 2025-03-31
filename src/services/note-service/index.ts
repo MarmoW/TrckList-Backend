@@ -67,7 +67,7 @@ async function shareNote(userId: number, noteId:number){
 
     noteRepository.update(noteId, undefined, undefined, undefined, isShared);
 
-    const link = nanoid(8);
+    const link = nanoid(10);
 
     shareUrlRepository.create({
         noteId,
@@ -100,7 +100,10 @@ async function getAllNotes(listId:number){
 };
 
 async function getNoteById(noteId: number){
-    return noteRepository.getNoteById(noteId);
+    const note = await noteRepository.getNoteById(noteId);
+
+    if(!note) throw notFoundError;
+    return note;
 };
 
 async function getNoteByUrl(link: string){

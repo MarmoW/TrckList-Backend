@@ -1,6 +1,5 @@
 import { badRequestError } from "@/errors/bad-request-error";
 import { forbiddenError } from "@/errors/forbidden-error";
-import { noContentError } from "@/errors/no-content-error";
 import { notFoundError } from "@/errors/not-found-error";
 import listRepository from "@/repositories/list-repository";
 import taskRepository from "@/repositories/task-repository";
@@ -27,7 +26,6 @@ async function updateTask(userId:number, listId: number,taskId:number, data:{con
     
     const list = await listRepository.getListById(listId);
     const task = await taskRepository.getTaskById(taskId);
-    console.log(data.content)
     
     if(!data.content) {
         if(!task) throw badRequestError;

@@ -22,9 +22,9 @@ app
  .use("/auth", authRouter)
  .use("/users", usersRouter)
  .use("/lists", listsRouter)
- .use("/lists/:listid/tasks", tasksRouter)
+ .use("/lists", tasksRouter)
  .use("/shareurl", shareRouter)
- //.use(handleApplicationError);
+ .use(handleApplicationError);
 
 export function init(): Promise<Express>{
     connectDb();
