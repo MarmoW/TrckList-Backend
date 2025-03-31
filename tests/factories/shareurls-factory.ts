@@ -1,7 +1,8 @@
 import { prisma } from "@/config";
 import { ShareUrl } from "@prisma/client";
-import { createNote } from "./notes-factory";
 import { nanoid } from "nanoid";
+import { createNote } from "./notes-factory";
+
 
 export async function createShareurl():Promise<ShareUrl>{
 
