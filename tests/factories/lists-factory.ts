@@ -13,7 +13,7 @@ export async function createListTasks(): Promise<List>{
             listType: ListType.TASKS
         }
     });
-}
+};
 
 export async function createListNotes(): Promise<List>{
 
@@ -26,4 +26,4 @@ export async function createListNotes(): Promise<List>{
             listType: ListType.NOTES
         }
     });
-}
+};
