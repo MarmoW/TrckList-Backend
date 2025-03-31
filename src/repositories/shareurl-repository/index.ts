@@ -19,8 +19,18 @@ async function deleteShareurl(noteId: number) {
     
 };
 
+async function getShareByUrl(link: string){
+
+    return prisma.shareUrl.findFirst({
+        where:{
+            link: link,
+        },
+    })
+};
+
+
 const shareUrlRepository = {
-    create, deleteShareurl
+    create, deleteShareurl, getShareByUrl
 };
 
 export default shareUrlRepository;

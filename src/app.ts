@@ -9,6 +9,7 @@ import { usersRouter } from "./routers/user-router";
 import { handleApplicationError } from "./middlewares";
 import { listsRouter } from "./routers/list-router";
 import tasksRouter from "./routers/task-router";
+import shareRouter from "./routers/share-router";
 
 
 loadEnv();
@@ -22,7 +23,8 @@ app
  .use("/users", usersRouter)
  .use("/lists", listsRouter)
  .use("/lists/:listid/tasks", tasksRouter)
-  //.use(handleApplicationError);
+ .use("/shareurl", shareRouter)
+ //.use(handleApplicationError);
 
 export function init(): Promise<Express>{
     connectDb();

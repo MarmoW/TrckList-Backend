@@ -101,10 +101,22 @@ async function getAllNotes(listId:number){
 
 async function getNoteById(noteId: number){
     return noteRepository.getNoteById(noteId);
-}
+};
+
+async function getNoteByUrl(link: string){
+    const share = await shareUrlRepository.getShareByUrl(link);
+    console.log(share)
+    if(!share) throw badRequestError;
+    const note = await noteRepository.getNoteById(share.noteId);
+    console.log(note)
+    if(!note) throw badRequestError;
+    if(note.isShared === false) throw forbiddenError;
+
+    return note;
+};
 
 const noteService = {
-    createNote, deleteNote, updateNote, shareNote, unshareNote, getAllNotes, getNoteById
+    createNote, deleteNote, updateNote, shareNote, unshareNote, getAllNotes, getNoteById, getNoteByUrl
 };
 
 export default noteService;
