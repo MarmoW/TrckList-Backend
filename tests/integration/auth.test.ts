@@ -5,6 +5,9 @@ import { createUser } from '../factories';
 import app, { init } from '@/app';
 import { describe } from 'node:test';
 import { cleanDb } from '../helper';
+import { internet } from 'faker';
+
+
 
 beforeAll(async () => {
     await init();
@@ -43,7 +46,10 @@ describe('sending a valid body', () => {
 
         await createUser(body);
 
-        const resp = await server.post('/auth/sign-in').send(body);
+        const resp = await server.post('/auth/sign-in').send({
+            email: faker.internet.email(),
+            password: body.password
+        });
 
         expect(resp.status).toBe(httpStatus.UNAUTHORIZED);
     });
@@ -53,7 +59,7 @@ describe('sending a valid body', () => {
         await createUser(body);
 
         const resp = await server.post('/auth/sign-in').send({
-            ...body,
+            email: body.email,
             password: faker.internet.password({length: 12})
         })
 
@@ -67,7 +73,10 @@ describe('when credentials are valid', async () => {
 
         await createUser(body);
 
-        const resp = await server.post('/auth/sign-in').send(body);
+        const resp = await server.post('/auth/sign-in').send({
+            email: body.email,
+            password: body.password,
+        });
 
         expect(resp.status).toBe(httpStatus.OK);
     });
@@ -77,12 +86,14 @@ describe('when credentials are valid', async () => {
         
         const user = await createUser(body);
 
-        const resp = await server.post('/auth/sign-in').send(body);
+        const resp = await server.post('/auth/sign-in').send({
+            email: body.email,
+            password: body.password,
+        });
 
         expect(resp.body.user).toEqual({
             id: user.id,
-            email: user.email,
-            name: user.name
+            email: user.email
         });
     });
 
@@ -91,7 +102,10 @@ describe('when credentials are valid', async () => {
 
         await createUser(body);
 
-        const resp = await server.post('/auth/sign-in').send(body);
+        const resp = await server.post('/auth/sign-in').send({
+            email: body.email,
+            password: body.password,
+        });
 
         expect(resp.body.token).toBeDefined();
     });

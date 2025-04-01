@@ -24,6 +24,7 @@ app
  .use("/lists", listsRouter)
  .use("/lists", tasksRouter)
  .use("/shareurl", shareRouter)
+ 
  .use(handleApplicationError);
 
 export function init(): Promise<Express>{
