@@ -24,7 +24,6 @@ async function createShareCode(userId: number, listId: number, singleUse?: boole
 
 };
 
-
 async function deleteShareCode(userId: number, listId: number, link: string){
     const list = await listRepository.getListById(listId);
     if(!list) throw notFoundError;
@@ -54,8 +53,43 @@ async function joinWithCode(userId:number, link:string){
 
 };
 
+async function leaveListShare(userId: number, noteId: number){
+
+    return sharedListRepository.leaveListShare(userId, noteId);
+};
+
+async function getSharedUsers(userId: number, listId: number){
+
+    const list = await listRepository.getListById(listId);
+    if(!list) throw notFoundError;
+    if(list.userId !== userId) throw forbiddenError;
+
+    return sharedListRepository.getAllSharedUsers(listId);
+
+};
+
+async function revokeUserAccess(userId: number, listId: number, revokedId: number){
+
+    const list = await listRepository.getListById(listId);
+    if(!list) throw notFoundError;
+    if(list.userId !== userId) throw forbiddenError;
+
+    return sharedListRepository.leaveListShare(revokedId, listId);
+
+};
+
+async function seeAllShareCodes(userId: number, listId: number){
+    const list = await listRepository.getListById(listId);
+    if(!list) throw notFoundError;
+    if(list.userId !== userId) throw forbiddenError;
+
+    return sharedListRepository.getAllSharedUsers(listId);
+};
+
+
 const listShareRepository = {
-    createShareCode, deleteShareCode, joinWithCode
+    createShareCode, deleteShareCode, joinWithCode, leaveListShare, getSharedUsers, revokeUserAccess,
+    seeAllShareCodes,
 };
 
 export default listShareRepository;

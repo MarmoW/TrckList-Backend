@@ -58,8 +58,41 @@ async function checkAlreadyJoined(userId: number, listId: number) {
     })
 };
 
+async function leaveListShare(userId: number, listId: number){
+    const findShare = await prisma.sharedList.findFirst({
+        where:{
+            userId: userId,
+            listId: listId
+        }
+    });
+
+    return prisma.sharedList.delete({
+        where:{
+            id: findShare.id
+        },
+    });
+};
+
+async function getAllSharedUsers(listId: number){
+
+    return prisma.sharedList.findMany({
+        where:{
+            listId: listId,
+        },
+    })
+};
+
+async function getAllShareCodes(listId: number){
+    return prisma.sharedList.findMany({
+        where:{
+         listId:listId,
+        },
+    });
+};
+
 const sharedListRepository = {
-    create, deleteSharedlist, isThisUserAllowed, createShareCode, deleteShareCode, getShareByLink, checkAlreadyJoined
+    create, deleteSharedlist, isThisUserAllowed, createShareCode, deleteShareCode, getShareByLink,
+    checkAlreadyJoined, leaveListShare, getAllSharedUsers, getAllShareCodes
 };
 
 export default sharedListRepository;
