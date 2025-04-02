@@ -7,9 +7,10 @@ import { AuthenticatedRequest } from "@/middlewares";
 export async function getTasks(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
     const listId = Number(req.params.listId);
+    const { userId } = req;
 
     try{
-        const notes = await taskService.getAllTaks(listId);
+        const notes = await taskService.getAllTaks(listId, userId);
         res.status(httpStatus.OK).send(notes);
         return
     }catch(err){   
@@ -43,7 +44,6 @@ export async function deleteTask(req: AuthenticatedRequest, res: Response, next:
     const listId = Number(req.params.listId); 
     const taskId = Number(req.params.taskId); 
 
-    console.log(taskId)
     try{
         await taskService.deleteTask(userId, listId, taskId)
         res.sendStatus(httpStatus.OK);

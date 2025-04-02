@@ -108,10 +108,10 @@ async function getNoteById(noteId: number){
 
 async function getNoteByUrl(link: string){
     const share = await shareUrlRepository.getShareByUrl(link);
-    console.log(share)
+    
     if(!share) throw badRequestError;
     const note = await noteRepository.getNoteById(share.noteId);
-    console.log(note)
+     
     if(!note) throw badRequestError;
     if(note.isShared === false) throw forbiddenError;
 

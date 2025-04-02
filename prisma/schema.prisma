@@ -50,6 +50,7 @@ model List {
   Note Note[]
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
   SharedList SharedList[]
+  ShareListCode ShareListCode[]
 
   @@unique([userId, name])
 }
@@ -104,4 +105,13 @@ model PasswordResetToken{
   createdAt DateTime @default(now())
   expiresAt DateTime @default(dbgenerated("(NOW() + INTERVAL '24 hours')"))
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ShareListCode {
+  id Int @id @default(autoincrement())
+  listId Int
+  link String @unique
+  singleUse Boolean @default(true)
+  createdAt DateTime @default(now())
+  List List @relation(fields: [listId], references: [id])
 }

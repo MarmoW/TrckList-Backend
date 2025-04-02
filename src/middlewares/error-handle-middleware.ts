@@ -6,7 +6,6 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 export function handleApplicationError(err: ApplicationError | Error | PrismaClientKnownRequestError,
      _req: Request, res: Response, _next: NextFunction ): void {
     
-     console.log(err.name)
     if (err instanceof PrismaClientKnownRequestError) {
           handlePrismaError(err, res);
           return;

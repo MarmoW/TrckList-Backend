@@ -1,10 +1,9 @@
 import { ListType } from "@prisma/client";
 import listRepository from "@/repositories/list-repository";
-import sharedListRepository from "@/repositories/sharedlist-repository";
 import { forbiddenError } from "@/errors";
 import { badRequestError } from "@/errors";
 import { noContentError } from "@/errors";
-import { nanoid } from "nanoid";
+
 
 
 type CreateListResponse = {
@@ -27,12 +26,10 @@ async function updateList(listId: number, userId:number, data:{name?:string, boo
     
     if(!data.name && !data.bookmark) throw noContentError;
 
-    //2 Simple queries pro: simple code, more reusability cons: slower than single joint query
     const [isOwner] = await Promise.all([
         listRepository.getListById(listId)
       ]);
     
-      console.log(userId, isOwner.userId)
     if(userId !== isOwner.userId) throw forbiddenError;
     
     if(isOwner.name === data.name && isOwner.bookmark === data.bookmark) throw badRequestError;   
