@@ -1,4 +1,4 @@
-# Trck-List: API para Gerenciamento de Listas e Notas
+# Trck-List: API para Gerenciamento de Listas e Anotações
 
 ## Descrição
 
