@@ -9,7 +9,7 @@ async function create(data: Prisma.TaskUncheckedCreateInput) {
     
 }
 
-async function update(taskId: number, content?: string, bookmark?: boolean){
+async function update(taskId: number, content?: string, bookmark?: boolean, isDone?: boolean){
 
     return prisma.task.update({
         where:{
@@ -18,6 +18,7 @@ async function update(taskId: number, content?: string, bookmark?: boolean){
         data:{
             content: content,
             bookmark: bookmark,
+            isDone: isDone
         },
     })
 }

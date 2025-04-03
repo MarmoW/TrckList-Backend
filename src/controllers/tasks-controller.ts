@@ -23,10 +23,10 @@ export async function updateTask(req: AuthenticatedRequest, res: Response, next:
     const {userId } = req;
     const listId = Number(req.params.listId); 
     const taskId = Number(req.params.taskId); 
-    const { content, bookmark } = req.body;
+    const { content, bookmark, isDone } = req.body;
 
     const data = {
-        content, bookmark
+        content, bookmark, isDone
     };
 
     try{
