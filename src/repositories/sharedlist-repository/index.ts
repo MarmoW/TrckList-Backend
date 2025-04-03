@@ -90,8 +90,16 @@ async function getAllShareCodes(listId: number){
     });
 };
 
+async function deleteAllShares(listId: number){
+
+    return prisma.sharedList.deleteMany({
+        where:{
+            listId: listId,
+        },
+    });
+};
 const sharedListRepository = {
-    create, deleteSharedlist, isThisUserAllowed, createShareCode, deleteShareCode, getShareByLink,
+    create, deleteSharedlist, isThisUserAllowed, createShareCode, deleteShareCode, getShareByLink, deleteAllShares,
     checkAlreadyJoined, leaveListShare, getAllSharedUsers, getAllShareCodes
 };
 

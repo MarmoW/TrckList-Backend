@@ -11,7 +11,8 @@ export async function shareList(req: AuthenticatedRequest, res: Response, next: 
 
     try{
         const shareCode = await listShareService.createShareCode(userId, listId, isSingleUse);
-        return res.status(httpStatus.CREATED).send(shareCode);
+        res.status(httpStatus.CREATED).send(shareCode);
+        return
     }catch(err){
         next(err);
     }
@@ -23,9 +24,10 @@ export async function joinSharedList(req: AuthenticatedRequest, res: Response, n
 
     try{
         await listShareService.joinWithCode(userId, link);
-        return res.sendStatus(httpStatus.OK);
-    }catch(err){
-        next(err);
+        res.sendStatus(httpStatus.OK);
+        return 
+    }catch(error){
+        next(error);
     }
 };
 
@@ -34,7 +36,8 @@ export async function leaveSharedList(req: AuthenticatedRequest, res: Response, 
     const {listId} = req.body;
     try{
         await listShareService.leaveListShare(userId, listId);
-        return res.sendStatus(httpStatus.OK);
+        res.sendStatus(httpStatus.OK);
+        return 
     }catch(err){
         next(err);
     }
@@ -47,6 +50,8 @@ export async function revokeUserAccess(req: AuthenticatedRequest, res: Response,
     
     try{
         await listShareService.revokeUserAccess(userId, listId, revokedId);
+        res.sendStatus(httpStatus.OK);
+        return
     }catch(err){
         next(err);
     }
@@ -58,7 +63,8 @@ export async function getAllShareCodes(req: AuthenticatedRequest, res: Response,
 
     try{
         const sharingCodes = await listShareService.seeAllShareCodes(userId, listId);
-        return res.status(httpStatus.OK).send(sharingCodes);
+        res.status(httpStatus.OK).send(sharingCodes);
+        return 
     }catch(err){
         next(err);
     }
@@ -70,12 +76,34 @@ export async function getAllSharedUsers(req: AuthenticatedRequest, res: Response
 
     try{
         const sharingUsers = await listShareService.getSharedUsers(userId, listId)
-        return res.status(httpStatus.OK).send(sharingUsers);
+        res.status(httpStatus.OK).send(sharingUsers);
+        return 
     }catch(err){
         next(err);
     }
 };
 
 export async function deleteShareCode(req: AuthenticatedRequest, res: Response, next: NextFunction){
-    //delete share code
+    const { userId } = req;
+    const listId = Number(req.params.listId);
+    const { link } = req.body;
+
+    try{
+        await listShareService.deleteShareCode(userId, listId, link);
+        res.sendStatus(httpStatus.OK);
+        return 
+    }catch(err){
+        next(err);
+    }
+};
+
+export async function unshareList(req: AuthenticatedRequest, res: Response, next: NextFunction){
+    const { userId } = req;
+    const listId = Number(req.params.listId);
+
+    try{
+        await listShareService.deleteAllShares(userId, listId);
+    }catch(err){
+        next(err);
+    }
 };

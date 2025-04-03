@@ -86,10 +86,18 @@ async function seeAllShareCodes(userId: number, listId: number){
     return sharedListRepository.getAllSharedUsers(listId);
 };
 
+async function deleteAllShares(userId:number, listId:number){
+    const list = await listRepository.getListById(listId);
+    if(!list) throw notFoundError;
+    if(list.userId !== userId) throw forbiddenError;
+
+    return sharedListRepository.deleteAllShares(listId);
+};
+
 
 const listShareService = {
     createShareCode, deleteShareCode, joinWithCode, leaveListShare, getSharedUsers, revokeUserAccess,
-    seeAllShareCodes,
+    seeAllShareCodes, deleteAllShares
 };
 
 export default listShareService;
