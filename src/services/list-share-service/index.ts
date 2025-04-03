@@ -53,9 +53,9 @@ async function joinWithCode(userId:number, link:string){
 
 };
 
-async function leaveListShare(userId: number, noteId: number){
+async function leaveListShare(userId: number, listId: number){
 
-    return sharedListRepository.leaveListShare(userId, noteId);
+    return sharedListRepository.leaveListShare(userId, listId);
 };
 
 async function getSharedUsers(userId: number, listId: number){
@@ -87,9 +87,9 @@ async function seeAllShareCodes(userId: number, listId: number){
 };
 
 
-const listShareRepository = {
+const listShareService = {
     createShareCode, deleteShareCode, joinWithCode, leaveListShare, getSharedUsers, revokeUserAccess,
     seeAllShareCodes,
 };
 
-export default listShareRepository;
+export default listShareService;
