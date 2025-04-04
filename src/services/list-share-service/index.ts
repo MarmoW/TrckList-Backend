@@ -1,17 +1,15 @@
-import { ListType } from "@prisma/client";
 import listRepository from "@/repositories/list-repository";
 import { conflictError, forbiddenError, notFoundError } from "@/errors";
-import { badRequestError } from "@/errors";
 import { nanoid } from "nanoid";
 import sharedListRepository from "@/repositories/sharedlist-repository";
 
 
 async function createShareCode(userId: number, listId: number, singleUse?: boolean){
-
+    
     const list = await listRepository.getListById(listId);
     if(!list) throw notFoundError;
     if(list.userId !== userId) throw forbiddenError;
-
+    
     const link = nanoid(8);
 
     const data = {
@@ -79,17 +77,29 @@ async function revokeUserAccess(userId: number, listId: number, revokedId: numbe
 };
 
 async function seeAllShareCodes(userId: number, listId: number){
+    console.log("list share service", listId, userId)
+
     const list = await listRepository.getListById(listId);
+    
     if(!list) throw notFoundError;
     if(list.userId !== userId) throw forbiddenError;
+    
 
     return sharedListRepository.getAllSharedUsers(listId);
 };
 
 async function deleteAllShares(userId:number, listId:number){
     const list = await listRepository.getListById(listId);
+    console.log("del all @ service", 1)
+
     if(!list) throw notFoundError;
     if(list.userId !== userId) throw forbiddenError;
+    console.log(list)
+
+    const share = await sharedListRepository.getAllShareCodes(listId)
+    if(!share || share.length === 0 ) throw notFoundError;
+
+    console.log("del all @ service", 2)
 
     return sharedListRepository.deleteAllShares(listId);
 };

@@ -27,7 +27,7 @@ async function isThisUserAllowed(listId: number, userId: number){
 };
 
 async function createShareCode(data: Prisma.ShareListCodeUncheckedCreateInput){
-
+    console.log(data)
     return prisma.shareListCode.create({
         data
     });
@@ -83,7 +83,8 @@ async function getAllSharedUsers(listId: number){
 };
 
 async function getAllShareCodes(listId: number){
-    return prisma.sharedList.findMany({
+    console.log("repo", listId)
+    return prisma.shareListCode.findMany({
         where:{
          listId:listId,
         },
@@ -92,7 +93,7 @@ async function getAllShareCodes(listId: number){
 
 async function deleteAllShares(listId: number){
 
-    return prisma.sharedList.deleteMany({
+    return prisma.shareListCode.deleteMany({
         where:{
             listId: listId,
         },

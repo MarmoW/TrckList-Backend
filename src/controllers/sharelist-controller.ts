@@ -7,10 +7,10 @@ import listShareService from "@/services/list-share-service";
 export async function shareList(req: AuthenticatedRequest, res: Response, next: NextFunction){
     const listId = Number(req.params.listId);
     const { userId } = req;
-    const { isSingleUse } = req.body; 
+    const { singleUse } = req.body; 
 
     try{
-        const shareCode = await listShareService.createShareCode(userId, listId, isSingleUse);
+        const shareCode = await listShareService.createShareCode(userId, listId, singleUse);
         res.status(httpStatus.CREATED).send(shareCode);
         return
     }catch(err){
@@ -100,9 +100,12 @@ export async function deleteShareCode(req: AuthenticatedRequest, res: Response, 
 export async function unshareList(req: AuthenticatedRequest, res: Response, next: NextFunction){
     const { userId } = req;
     const listId = Number(req.params.listId);
+    console.log("unshare list", listId)
 
     try{
         await listShareService.deleteAllShares(userId, listId);
+        res.sendStatus(httpStatus.OK);
+        return
     }catch(err){
         next(err);
     }

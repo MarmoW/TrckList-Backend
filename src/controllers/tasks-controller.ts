@@ -8,6 +8,7 @@ export async function getTasks(req: AuthenticatedRequest, res: Response, next: N
 
     const listId = Number(req.params.listId);
     const { userId } = req;
+    
 
     try{
         const notes = await taskService.getAllTasks(listId, userId);
