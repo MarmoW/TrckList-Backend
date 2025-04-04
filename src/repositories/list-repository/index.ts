@@ -14,7 +14,6 @@ async function create(data: Prisma.ListUncheckedCreateInput) {
 
   };
  
-
 async function update(listId: number, data:{name?:string, bookmark?: boolean}){
   return prisma.list.update({
     where:{
@@ -53,14 +52,14 @@ async function deleteList(listId: number){
   );
 };
 
-async function uniqueName(name: string, userId: number){
+/* async function uniqueName(name: string, userId: number){
   const list = prisma.list.findFirst({
     where: {
       name: name,
       userId: userId
     }});
     return list;
-};
+}; */
 
 type UpdateListType = {
   name: string;
@@ -68,6 +67,6 @@ type UpdateListType = {
   sharedId: number;
 }
 
-const listRepository = {create, update, getListById, deleteList, getListsByUser, uniqueName};
+const listRepository = {create, update, getListById, deleteList, getListsByUser};
 
 export default listRepository;

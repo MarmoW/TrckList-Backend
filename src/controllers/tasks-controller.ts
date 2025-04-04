@@ -10,7 +10,7 @@ export async function getTasks(req: AuthenticatedRequest, res: Response, next: N
     const { userId } = req;
 
     try{
-        const notes = await taskService.getAllTaks(listId, userId);
+        const notes = await taskService.getAllTasks(listId, userId);
         res.status(httpStatus.OK).send(notes);
         return
     }catch(err){   

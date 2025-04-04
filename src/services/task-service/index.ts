@@ -56,7 +56,7 @@ async function deleteTask(userId:number, listId: number, taskId: number){
     return taskRepository.deleteTask(taskId);
 };
 
-async function getAllTaks(listId:number, userId: number){
+async function getAllTasks(listId:number, userId: number){
 
     const list = await listRepository.getListById(listId)
     if(!list) throw notFoundError;
@@ -66,7 +66,7 @@ async function getAllTaks(listId:number, userId: number){
 };
 
 const taskService = {
-    createTask, updateTask, deleteTask, getAllTaks
+    createTask, updateTask, deleteTask, getAllTasks
 };
 
 export default taskService;

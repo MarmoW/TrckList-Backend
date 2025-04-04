@@ -18,7 +18,7 @@ export async function getNotes(req: AuthenticatedRequest, res: Response, next: N
     }
 };
 
-export async function updateNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
+export async function updateNote(req: AuthenticatedRequest, res: Response, next: NextFunction){
     
     const { userId } = req;
     const { name, content, bookmark } = req.body;
@@ -40,7 +40,7 @@ export async function updateNotes(req: AuthenticatedRequest, res: Response, next
     }
 };
 
-export async function deleteNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
+export async function deleteNote(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
     const { userId } = req;
     const noteId = Number(req.params.noteId);
@@ -71,7 +71,7 @@ export async function createNotes(req: AuthenticatedRequest, res: Response, next
     } 
 }
 
-export async function shareNotes(req: AuthenticatedRequest, res: Response, next: NextFunction){
+export async function shareNote(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
     const {userId} = req;
     const noteId = Number(req.params.noteId);
@@ -86,7 +86,7 @@ export async function shareNotes(req: AuthenticatedRequest, res: Response, next:
     }
 };
 
-export async function unshareNotes(req: AuthenticatedRequest, res: Response, next:NextFunction){
+export async function unshareNote(req: AuthenticatedRequest, res: Response, next:NextFunction){
 
     const {userId} = req;
     const noteId = Number(req.params.noteId);
@@ -100,7 +100,7 @@ export async function unshareNotes(req: AuthenticatedRequest, res: Response, nex
     }
 };
 
-export async function getNotesById(req: AuthenticatedRequest, res: Response, next: NextFunction){
+export async function getNoteById(req: AuthenticatedRequest, res: Response, next: NextFunction){
 
     const noteId = Number(req.params.noteId);
 
