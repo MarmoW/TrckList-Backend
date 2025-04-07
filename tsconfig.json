@@ -12,8 +12,8 @@
       "experimentalDecorators": true,
       "paths": {
         "@/*": ["./*"],
-        "@errors/*": ["./errors/*"],
-        "@errors": ["./errors/index"],
+        "@errors/*": ["errors/*"],
+        "@errors": ["errors/index"],
       }
     },
     "plugins": [
@@ -21,10 +21,11 @@
           "transform": "typescript-transform-paths"
         }
       ],
-    "include": [
-      "src", "tests"
-    ],
+    "include": [ "src" ],
+    "exclude": ["dist", "test"],  
     "ts-node": {
       "require": ["tsconfig-paths/register"]
   },
+  
   } 
+    

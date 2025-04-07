@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import {faker} from '@faker-js/faker';
 import { User } from '@prisma/client';
 import { prisma } from '@/config';

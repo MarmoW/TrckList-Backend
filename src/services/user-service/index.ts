@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import userRepository from "@/repositories/user-repository";
 import { CreateUserParams } from "@/protocols";
 import { duplicatedEmailError } from "@/errors/duplicated-email-error";
