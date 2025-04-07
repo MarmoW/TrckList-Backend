@@ -1,6 +1,6 @@
 FROM node:22.13.1 AS builder
 
-WORKDIR /back-end
+WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
@@ -11,12 +11,12 @@ RUN npm run build
 
 FROM node:22.13.1
 
-WORKDIR /back-end
+WORKDIR /app
 
-COPY --from=builder /back-end/dist ./dist
-COPY --from=builder /back-end/prisma ./prisma
-COPY --from=builder /back-end/dist ./dist
-COPY --from=builder /back-end/prisma ./prisma
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
 
 COPY .env .env
 
