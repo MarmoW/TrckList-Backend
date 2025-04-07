@@ -41,10 +41,12 @@ async function getTaskById(taskId:number){
 
 async function getTasksByListId(listId: number){
     return prisma.task.findMany({
-        where:{
-            listId: listId,
-        },
-    })
+        where: { listId },
+        orderBy: [
+          { bookmark: 'desc' },  
+          { updatedAt: 'desc' },      
+        ],
+      })
 };
 
 const taskRepository = {

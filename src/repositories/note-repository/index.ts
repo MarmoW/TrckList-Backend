@@ -46,6 +46,10 @@ async function getNotesByListId(listId: number){
         where:{
             listId: listId,
         },
+        orderBy: [
+            { bookmark: 'desc' },
+            { updatedAt: 'desc' },
+          ],
     })
 };
 

@@ -46,6 +46,8 @@ model List {
   name String @db.VarChar(255)
   listType ListType
   bookmark Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   Task Task[]
   Note Note[]
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)

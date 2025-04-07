@@ -54,7 +54,7 @@ export async function createList(req: AuthenticatedRequest, res: Response, next:
     try{
         const list = await listService.createList(userId, listType, name);
         
-        res.status(httpStatus.OK).send(list.id);
+        res.status(httpStatus.OK).send({listId: list.id});
         return
     }catch(err){
         next(err);

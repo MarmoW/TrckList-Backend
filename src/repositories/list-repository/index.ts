@@ -36,9 +36,11 @@ async function getListById(listId: number){
 
 async function getListsByUser(userId: number){
   return prisma.list.findMany({
-    where:{
-      userId: userId,
-    },
+    where: { userId },
+    orderBy: [
+      { bookmark: 'desc' }, 
+      { updatedAt: 'desc' }, 
+    ],
   })
 };
 
@@ -51,15 +53,6 @@ async function deleteList(listId: number){
   }
   );
 };
-
-/* async function uniqueName(name: string, userId: number){
-  const list = prisma.list.findFirst({
-    where: {
-      name: name,
-      userId: userId
-    }});
-    return list;
-}; */
 
 type UpdateListType = {
   name: string;
