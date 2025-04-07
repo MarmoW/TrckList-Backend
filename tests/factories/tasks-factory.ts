@@ -7,9 +7,8 @@ export async function createTask(): Promise<Task> {
 
     const list = await createListTasks();
 
-    return prisma.note.create({
+    return prisma.task.create({
         data:{
-            name: faker.word.noun(),
             listId: list.id,
             content: faker.lorem.sentence()
         }

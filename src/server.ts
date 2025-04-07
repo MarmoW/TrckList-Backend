@@ -1,5 +1,7 @@
 import app, { init } from './app';
 import { EventEmitter } from 'events';
+import 'module-alias/register';
+
 EventEmitter.defaultMaxListeners = 20; 
 
 const port = +process.env.PORT || 4000;

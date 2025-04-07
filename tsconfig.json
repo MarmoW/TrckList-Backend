@@ -6,8 +6,7 @@
       "rootDirs": ["src", "tests"],
       "baseUrl": "./src",
       "esModuleInterop": true, 
-      "moduleResolution": "node",      
-     
+      "moduleResolution": "node",           
       "noImplicitAny": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
@@ -26,7 +25,6 @@
       "src", "tests"
     ],
     "ts-node": {
-      // Do not forget to `npm i -D tsconfig-paths`
       "require": ["tsconfig-paths/register"]
   },
   } 
