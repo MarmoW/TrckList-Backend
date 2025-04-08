@@ -10,6 +10,184 @@ A **Trck-List** é uma API desenvolvida em **Node.js** com **Prisma ORM** que pe
 - **Gerenciamento de Listas:** Criação, edição, exclusão e compartilhamento de listas de tarefas (apenas listas de tarefas são compartilháveis).
 - **Compartilhamento de Anotações:** Criação, manipulação e compartilhamento de anotações via link.
 
+## 🔐 Authentication
+
+### POST `/sign-in`
+Recebe email e senha, devolve token de sessão.
+- **Request Body:**
+```json
+{
+  "email": "user@example.com",
+  "password": "123456"
+}
+```
+- **Response:**
+```json
+{
+  "token": "jwt_token_aqui"
+}
+```
+
+### POST `/`
+Cria um novo usuário.
+- **Request Body:**
+```json
+{
+  "name": "Usuário",
+  "email": "user@example.com",
+  "password": "123456"
+}
+```
+- **Response:**
+```json
+{
+  "message": "Usuário criado com sucesso"
+}
+```
+
+## 📋 Lists
+
+### GET `/lists`
+Retorna todas as listas do usuário.
+
+### GET `/lists/:listId/users`
+Retorna todos os usuários com quem a lista foi compartilhada.
+
+### POST `/lists`
+Cria uma nova lista.
+- **Request Body:**
+```json
+{
+  "name": "Minha Lista",
+  "content": "Descrição",
+  "listType": "NOTES" // ou "TASKS"
+}
+```
+
+### POST `/lists/join`
+Entrar em uma lista compartilhada.
+- **Request Body:**
+```json
+{
+  "link": "codigo_de_convite"
+}
+```
+
+### PUT `/lists/:listId`
+Atualiza uma lista.
+- **Request Body:**
+```json
+{
+  "name": "Novo Nome",
+  "content": "Nova descrição",
+  "bookmark": true
+}
+```
+
+### DELETE `/lists/:listId`
+Remove a lista.
+
+### DELETE `/lists/:listId/users`
+Remove um usuário com quem a lista foi compartilhada (feito pelo dono da lista).
+
+### DELETE `/lists/:listId/leave`
+Sai da lista compartilhada.
+
+## 📝 Notes
+
+### GET `/lists/:listId/notes`
+Retorna todas as notas da lista.
+
+### POST `/lists/:listId/notes`
+Cria uma nova nota.
+- **Request Body:**
+```json
+{
+  "name": "Nota 1",
+  "content": "Conteúdo da nota"
+}
+```
+
+### GET `/lists/:listId/notes/:noteId`
+Retorna nota específica.
+
+### PUT `/lists/:listId/notes/:noteId`
+Atualiza uma nota.
+- **Request Body:**
+```json
+{
+  "name": "Nova Nota",
+  "content": "Novo conteúdo",
+  "bookmark": false
+}
+```
+
+### PUT `/lists/:listId/notes/:noteId/share`
+Compartilha a nota e retorna um código.
+
+### PUT `/lists/:listId/notes/:noteId/unshare`
+Remove o compartilhamento da nota.
+
+### DELETE `/lists/:listId/notes/:noteId`
+Deleta a nota.
+
+## 🔗 Shared Notes
+
+### GET `/share/:shareLink`
+Busca anotação através do link de compartilhamento.
+
+## 📌 List Sharing
+
+### GET `/lists/:listId/share`
+Retorna todos os códigos de compartilhamento da lista.
+
+### POST `/lists/:listId/share`
+Cria novo código de compartilhamento.
+
+### DELETE `/lists/:listId/share`
+Cancela o compartilhamento da lista.
+
+### DELETE `/lists/:listId/share/:link`
+Remove um código específico de compartilhamento.
+
+## ✅ Tasks
+
+### GET `/lists/:listId/tasks`
+Retorna todas as tarefas da lista.
+
+### POST `/lists/:listId/tasks`
+Cria uma nova tarefa.
+- **Request Body:**
+```json
+{
+  "content": "Comprar pão"
+}
+```
+
+### PUT `/lists/:listId/tasks/:taskId`
+Atualiza uma tarefa.
+- **Request Body:**
+```json
+{
+  "content": "Comprar leite",
+  "isDone": true,
+  "bookmark": false
+}
+```
+
+### DELETE `/lists/:listId/tasks/:taskId`
+Remove uma tarefa da lista.
+
+---
+
+### ⚠️ Observações
+- Todos os endpoints (exceto `/sign-in`, `/` e `/share/:link`) exigem autenticação via **Bearer Token** no header:
+```http
+Authorization: Bearer <token>
+```
+
+Se quiser, posso gerar uma versão em Swagger ou Postman Collection depois. Só avisar! ✅
+
 ## Tecnologias Utilizadas
 
 - **Node.js com Express:** Plataforma e framework para o desenvolvimento do servidor.

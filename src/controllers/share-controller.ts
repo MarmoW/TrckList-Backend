@@ -9,7 +9,11 @@ export async function getNotesByUrl(req: AuthenticatedRequest, res: Response, ne
 
     try{
         const note = await noteService.getNoteByUrl(url);
-        res.status(httpStatus.OK).send(note);
+        res.status(httpStatus.OK).send({
+            id: note.id,
+            name: note.name,
+            content: note.content
+        });
         return
     }catch(err){
         next(err);
