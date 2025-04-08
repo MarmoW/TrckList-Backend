@@ -7,7 +7,7 @@ A **Trck-List** é uma API desenvolvida em **Node.js** com **Prisma ORM** que pe
 ## Funcionalidades
 
 - **Cadastro e Autenticação:** Registro de novos usuários e autenticação segura.
-- **Gerenciamento de Listas:** Criação, edição, exclusão e compartilhamento de listas de tarefas (apenas listas de tarefas são compartilháveis).
+- **Gerenciamento de Listas:** Criação, edição, exclusão e compartilhamento de listas de tarefas e anotações(apenas listas de tarefas são compartilháveis).
 - **Compartilhamento de Anotações:** Criação, manipulação e compartilhamento de anotações via link.
 
 ## Authentication
@@ -96,23 +96,23 @@ Sai da lista compartilhada.
 ## Notes
 
 ### GET `/lists/:listId/notes`
-Retorna todas as notas da lista.
+Retorna todas as anotações da lista.
 
 ### POST `/lists/:listId/notes`
-Cria uma nova nota.
+Cria uma nova anotação.
 - **Request Body:**
 ```json
 {
   "name": "Nota 1",
-  "content": "Conteúdo da nota"
+  "content": "Conteúdo da anotação"
 }
 ```
 
 ### GET `/lists/:listId/notes/:noteId`
-Retorna nota específica.
+Retorna anotação específica.
 
 ### PUT `/lists/:listId/notes/:noteId`
-Atualiza uma nota.
+Atualiza uma anotação.
 - **Request Body:**
 ```json
 {
@@ -123,7 +123,7 @@ Atualiza uma nota.
 ```
 
 ### PUT `/lists/:listId/notes/:noteId/share`
-Compartilha a nota e retorna um código.
+Compartilha a anotação e retorna um código.
 
 ### PUT `/lists/:listId/notes/:noteId/unshare`
 Remove o compartilhamento da nota.
@@ -181,7 +181,7 @@ Remove uma tarefa da lista.
 ---
 
 ### Observações
-- Todos os endpoints (exceto `/sign-in`, `/` e `/share/:link`) exigem autenticação via **Bearer Token** no header:
+- Todos os endpoints (exceto `/sign-in`, `/users` e `/share/:link`) exigem autenticação via **Bearer Token** no header:
 ```http
 Authorization: Bearer <token>
 ```
