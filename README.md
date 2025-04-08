@@ -10,7 +10,7 @@ A **Trck-List** é uma API desenvolvida em **Node.js** com **Prisma ORM** que pe
 - **Gerenciamento de Listas:** Criação, edição, exclusão e compartilhamento de listas de tarefas (apenas listas de tarefas são compartilháveis).
 - **Compartilhamento de Anotações:** Criação, manipulação e compartilhamento de anotações via link.
 
-## 🔐 Authentication
+## Authentication
 
 ### POST `/sign-in`
 Recebe email e senha, devolve token de sessão.
@@ -45,7 +45,7 @@ Cria um novo usuário.
 }
 ```
 
-## 📋 Lists
+## Lists
 
 ### GET `/lists`
 Retorna todas as listas do usuário.
@@ -93,7 +93,7 @@ Remove um usuário com quem a lista foi compartilhada (feito pelo dono da lista)
 ### DELETE `/lists/:listId/leave`
 Sai da lista compartilhada.
 
-## 📝 Notes
+## Notes
 
 ### GET `/lists/:listId/notes`
 Retorna todas as notas da lista.
@@ -131,12 +131,12 @@ Remove o compartilhamento da nota.
 ### DELETE `/lists/:listId/notes/:noteId`
 Deleta a nota.
 
-## 🔗 Shared Notes
+## Shared Notes
 
 ### GET `/share/:shareLink`
 Busca anotação através do link de compartilhamento.
 
-## 📌 List Sharing
+## List Sharing
 
 ### GET `/lists/:listId/share`
 Retorna todos os códigos de compartilhamento da lista.
@@ -150,7 +150,7 @@ Cancela o compartilhamento da lista.
 ### DELETE `/lists/:listId/share/:link`
 Remove um código específico de compartilhamento.
 
-## ✅ Tasks
+## Tasks
 
 ### GET `/lists/:listId/tasks`
 Retorna todas as tarefas da lista.
@@ -180,13 +180,11 @@ Remove uma tarefa da lista.
 
 ---
 
-### ⚠️ Observações
+### Observações
 - Todos os endpoints (exceto `/sign-in`, `/` e `/share/:link`) exigem autenticação via **Bearer Token** no header:
 ```http
 Authorization: Bearer <token>
 ```
-
-Se quiser, posso gerar uma versão em Swagger ou Postman Collection depois. Só avisar! ✅
 
 ## Tecnologias Utilizadas
 
