@@ -99,6 +99,9 @@ async function deleteAllShares(listId: number){
         },
     });
 };
+
+
+
 const sharedListRepository = {
     create, deleteSharedlist, isThisUserAllowed, createShareCode, deleteShareCode, getShareByLink, deleteAllShares,
     checkAlreadyJoined, leaveListShare, getAllSharedUsers, getAllShareCodes

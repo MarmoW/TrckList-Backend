@@ -24,7 +24,7 @@ model User {
   Session Session[]
   List List[]
   SharedList SharedList[]
-  PasswordResetToken PasswordResetToken[]
+  PwResetToken PwResetToken[]
 }
 
 model Session{
@@ -103,11 +103,12 @@ model SharedList {
   
 }
 
-model PasswordResetToken{
+model PwResetToken{
   id Int @id @default(autoincrement())
   userId Int
+  code String
   createdAt DateTime @default(now())
-  expiresAt DateTime @default(dbgenerated("(NOW() + INTERVAL '24 hours')"))
+  expiresAt DateTime @default(dbgenerated("(NOW() + INTERVAL '1 hours')"))
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 

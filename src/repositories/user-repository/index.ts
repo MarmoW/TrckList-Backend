@@ -35,9 +35,17 @@ async function editUser(userId: number, data:{name?:string, email?:string, passw
     });
 }
 
+async function createPwRecToken(data:Prisma.PwResetTokenUncheckedCreateInput){
+
+    return prisma.pwResetToken.create({
+        data
+    })
+};
+
+
 
 const userRepository = {
-    findByEmail, create, editUser
+    findByEmail, create, editUser, createPwRecToken
 };
 
 export default userRepository;
