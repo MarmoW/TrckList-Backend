@@ -10,6 +10,10 @@ A **Trck-List** é uma API desenvolvida em **Node.js** com **Prisma ORM** que pe
 - **Gerenciamento de Listas:** Criação, edição, exclusão e compartilhamento de listas de tarefas e anotações(apenas listas de tarefas são compartilháveis).
 - **Compartilhamento de Anotações:** Criação, manipulação e compartilhamento de anotações via link.
 
+# API do Projeto
+
+A API está disponível em: [https://api.trcklist.com](https://api.trcklist.com)
+
 ## Authentication
 
 ### POST `/sign-in`
