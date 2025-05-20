@@ -1,6 +1,6 @@
 # Trck-List: API for Managing Task Lists and Notes
 
-[🇧🇷 Leia este README em português](README.pt-BR.md)
+[🇧🇷 Leia este README em português](readme.pt-br.md)
 
 ## Description
 
