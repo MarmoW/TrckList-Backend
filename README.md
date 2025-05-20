@@ -1,6 +1,6 @@
 # Trck-List: API for Managing Task Lists and Notes
 
-[🇧🇷 Leia este README em português](readme.pt-br.md)
+[🇧🇷 Leia este README em português]([readme.pt-br.md](https://github.com/MarmoW/TrckList-Backend/blob/main/README.pt-br.md))
 
 ## Description
 
